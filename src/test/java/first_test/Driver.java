@@ -1,4 +1,4 @@
-package com.browserstack.run_first_test;
+package first_test;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.json.simple.JSONArray;
@@ -18,10 +18,8 @@ public class Driver {
     private AndroidDriver driver;
 
     private Driver() throws IOException, ParseException {
-        System.out.println("Setting Up Test. . . .");
-
         JSONParser parser = new JSONParser();
-        JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/com/browserstack/run_first_test/first.conf.json"));
+        JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/first_test/browserstack.conf.json"));
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
@@ -56,9 +54,9 @@ public class Driver {
         if(app != null && !app.isEmpty()) {
             capabilities.setCapability("app", app);
         }
-
-        driver = new io.appium.java_client.android.AndroidDriver(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
-//        driver.terminateApp("com.ada.astrapayupdate");
+//        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new AndroidDriver(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
+        driver.terminateApp("com.ada.astrapayupdate");
     }
 
     public static Driver getInstance() throws IOException, ParseException {
